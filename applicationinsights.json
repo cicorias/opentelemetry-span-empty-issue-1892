@@ -1,0 +1,36 @@
+{
+    "role": {
+        "name": "assetingest-worker"
+    },
+    "preview": {
+        "instrumentation": {
+            "azureSdk": {
+                "enabled": true
+            }
+        }
+    },
+    "instrumentation": {
+        "logging": {
+            "level": "INFO"
+        },
+        "micrometer": {
+            "enabled": true
+        }
+    },
+    "heartbeat": {
+        "intervalSeconds": 60
+    },
+    "customDimensions": {
+        "podName": "foopod"
+    },
+    "selfDiagnostics": {
+      "destination": "file+console",
+      "level": "DEBUG",
+      "file": {
+        "path": "applicationinsights.log",
+        "maxSizeMb": 5,
+        "maxHistory": 1
+      }
+    }
+}
+

@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "pivotal.vscode-boot-dev-pack",
+        "vscjava.vscode-java-pack",
+        "vscjava.vscode-gradle",
+        "vscjava.vscode-spring-boot-dashboard",
+        "redhat.vscode-yaml"
+    ]
+}
