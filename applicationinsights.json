@@ -3,6 +3,7 @@
         "name": "assetingest-worker"
     },
     "preview": {
+        "openTelemetryApiSupport": true,
         "instrumentation": {
             "azureSdk": {
                 "enabled": true
