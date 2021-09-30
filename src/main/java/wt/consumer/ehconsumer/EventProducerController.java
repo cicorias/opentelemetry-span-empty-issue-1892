@@ -4,8 +4,9 @@ package wt.consumer.ehconsumer;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanContext;
 
+import java.beans.ConstructorProperties;
+
 import com.microsoft.applicationinsights.telemetry.RequestTelemetry;
-import com.microsoft.applicationinsights.web.internal.RequestTelemetryContext;
 import com.microsoft.applicationinsights.web.internal.ThreadContext;
 
 import org.slf4j.Logger;
@@ -58,12 +59,20 @@ public class EventProducerController {
     public ResponseEntity<String> sendMessage(@RequestParam String message) {
         LOGGER.info("Going to add message {} to sendMessage.", message);
 
-
-        var cid0 = getAICorrelationId();
-        var cid = getCorrelationId();
-
+        var response = new Response();
+        response.aiCorrelationId = getAICorrelationId();
+        response.otCorrelationId = getCorrelationId();
 
         many.emitNext(MessageBuilder.withPayload(message).build(), Sinks.EmitFailureHandler.FAIL_FAST);
-        return ResponseEntity.ok(message);
+        return ResponseEntity.ok(response.toString());
+    }
+
+    class Response{
+        public String aiCorrelationId;
+        public String otCorrelationId;
+        @Override
+        public String toString() {
+            return String.format("{\"aiCorrelationId\": \"%s\" ,\n\"otCorrelationId\": \"%s\"}", aiCorrelationId, otCorrelationId);
+        }
     }
 }

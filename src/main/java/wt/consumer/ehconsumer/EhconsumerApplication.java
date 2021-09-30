@@ -5,6 +5,9 @@ import io.opentelemetry.api.trace.SpanContext;
 
 import com.azure.spring.integration.core.EventHubHeaders;
 import com.azure.spring.integration.core.api.reactor.Checkpointer;
+import com.microsoft.applicationinsights.telemetry.RequestTelemetry;
+import com.microsoft.applicationinsights.web.internal.ThreadContext;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -50,6 +53,15 @@ public class EhconsumerApplication {
     //spanId=0000000000000000, traceFlags=00, traceState=ArrayBasedTraceState{entries=[]}, remote=false, valid=false}}"
       }
 
+
+    public String getAICorrelationId() {
+        var requestTelemetryContext = ThreadContext.getRequestTelemetryContext();
+        RequestTelemetry requestTelemetry = requestTelemetryContext == null ? null : requestTelemetryContext.getHttpRequestTelemetry();
+        String correlationId = requestTelemetry == null ? null : requestTelemetry.getContext().getOperation().getId();
+
+        return correlationId;
+    }
+
 	@Bean
     public Consumer<Message<String>> consume() {
         return message -> {
@@ -57,6 +69,7 @@ public class EhconsumerApplication {
 
 
             var thing = getCorrelationId();
+            var thing2 = getAICorrelationId();
 
 
             LOGGER.warn("**********  correlationid={}", thing);
