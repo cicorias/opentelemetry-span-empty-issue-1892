@@ -4,6 +4,7 @@
         "vscjava.vscode-java-pack",
         "vscjava.vscode-gradle",
         "vscjava.vscode-spring-boot-dashboard",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "shengchen.vscode-checkstyle"
     ]
 }
