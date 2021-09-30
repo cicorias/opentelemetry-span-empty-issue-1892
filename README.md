@@ -21,3 +21,6 @@ curl --location --request POST 'http://localhost:8080/messages?message=foobar&tr
 --data-raw 'asdf'
 foobar%              
 ```
+
+
+https://github.com/mnadeem/boot-opentelemetry-tempo
