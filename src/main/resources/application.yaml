@@ -12,7 +12,7 @@ spring:
          consume-in-0:
            destination: normal
            group: $Default
-          #  partitioned: true
+           partitioned: true
          supply-out-0:
            destination: normal
 

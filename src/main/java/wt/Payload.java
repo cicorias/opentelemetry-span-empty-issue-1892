@@ -1,4 +1,4 @@
-package wt.consumer.ehconsumer;
+package wt;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

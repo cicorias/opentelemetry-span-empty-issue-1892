@@ -1,4 +1,4 @@
-package wt.consumer.ehconsumer;
+package wt;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,11 +17,6 @@ public class EventProducerConfiguration {
 
     @Bean
     public Sinks.Many<Message<String>> many() {
-        return Sinks.many().unicast().onBackpressureBuffer();
-    }
-
-    @Bean
-    public Sinks.Many<Message<String[]>> lots() {
         return Sinks.many().unicast().onBackpressureBuffer();
     }
 

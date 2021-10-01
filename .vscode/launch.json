@@ -6,11 +6,10 @@
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
-            "mainClass": "wt.consumer.ehconsumer.EhconsumerApplication",
+            "mainClass": "wt.EhconsumerApplication",
             "projectName": "ehconsumer",
             "envFile": "${workspaceFolder}/.env",
-            "env": {
-                },
+            "env": {},
             "args": "",
             "vmArgs": "-javaagent:${workspaceFolder}/applicationinsights-agent-3.1.1.jar"
         }

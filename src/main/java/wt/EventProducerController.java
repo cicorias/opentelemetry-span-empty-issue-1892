@@ -1,7 +1,6 @@
-package wt.consumer.ehconsumer;
+package wt;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.applicationinsights.telemetry.RequestTelemetry;
 import com.microsoft.applicationinsights.web.internal.ThreadContext;
 
@@ -24,37 +23,6 @@ public class EventProducerController {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(EventProducerController.class);
 
-    /** this retrieves the OpenTelemetry representation of traceid */
-    public String[] getCorrelationId() {
-
-        Span current = null;
-        SpanContext context = null;
-        String traceid = null;
-        String spanid = null;
-
-        current = Span.current();
-
-        if (null != current) {
-            context = current.getSpanContext();
-        }
-
-        if (null != current && null != context) {
-            traceid = context.getTraceId();
-            spanid = context.getSpanId();
-        }
-
-        return new String[] { traceid, spanid };
-    }
-
-    /** this retrieves the ApplicationInsights legacy approach for correlationId */
-    public String getAICorrelationId() {
-        var requestTelemetryContext = ThreadContext.getRequestTelemetryContext();
-        RequestTelemetry requestTelemetry = requestTelemetryContext == null ? null
-                : requestTelemetryContext.getHttpRequestTelemetry();
-        String correlationId = requestTelemetry == null ? null : requestTelemetry.getContext().getOperation().getId();
-
-        return correlationId;
-    }
 
     @Autowired
     private Sinks.Many<Message<String>> many;
@@ -64,9 +32,9 @@ public class EventProducerController {
         try {
             String traceparent = content.at("/traceparent").asText();
             String message = content.at("/message").asText();
-            String[] otCorrelation = getCorrelationId();
+            String[] otCorrelation = ContextUtility.getCorrelationId();
             Payload response = new Payload();
-            response.aiCorrelationId = getAICorrelationId();
+            response.aiCorrelationId = ContextUtility.getAICorrelationId();
             response.otCorrelationId = otCorrelation[0];
             response.otSpandId = otCorrelation[1];
             response.message = message;

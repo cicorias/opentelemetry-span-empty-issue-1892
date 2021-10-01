@@ -1,24 +1,21 @@
-package wt.consumer.ehconsumer;
+package wt;
 
-import io.opentelemetry.api.trace.Span;
-import io.opentelemetry.api.trace.SpanContext;
+import static com.azure.spring.integration.core.AzureHeaders.CHECKPOINTER;
+
+import java.util.function.Consumer;
 
 import com.azure.spring.integration.core.EventHubHeaders;
 import com.azure.spring.integration.core.api.reactor.Checkpointer;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.microsoft.applicationinsights.telemetry.RequestTelemetry;
-import com.microsoft.applicationinsights.web.internal.ThreadContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.messaging.Message;
 
-import java.util.function.Consumer;
-import static com.azure.spring.integration.core.AzureHeaders.CHECKPOINTER;
-
+@Profile("!unittest") // Dont run during unit tests
 @SpringBootApplication
 public class EhconsumerApplication {
 
@@ -28,43 +25,14 @@ public class EhconsumerApplication {
         SpringApplication.run(EhconsumerApplication.class, args);
     }
 
-    public String getCorrelationId() {
-
-        //broken in// implementation 'com.azure.spring:azure-spring-cloud-stream-binder-eventhubs:2.9.0'  // breaks getting correlationid from span
-        Span current = null;
-        SpanContext context = null;
-        String traceid = null;
-
-        current = Span.current();
-
-        if (null != current)
-            context = current.getSpanContext();
-
-        if (null != current && null != context)
-            traceid = context.getTraceId();
-
-        return traceid;
-
-    }
-
-    public String getAICorrelationId() {
-        var requestTelemetryContext = ThreadContext.getRequestTelemetryContext();
-        RequestTelemetry requestTelemetry = requestTelemetryContext == null ? null
-                : requestTelemetryContext.getHttpRequestTelemetry();
-        String correlationId = requestTelemetry == null ? null : requestTelemetry.getContext().getOperation().getId();
-
-        return correlationId;
-    }
-
     @Bean
     public Consumer<Message<Payload>> consume() {
         return message -> {
             Checkpointer checkpointer = (Checkpointer) message.getHeaders().get(CHECKPOINTER);
 
-            var thing = getCorrelationId();
-            // var thing2 = getAICorrelationId();
+            String[] otCorrelation = ContextUtility.getCorrelationId();
 
-            LOGGER.warn("**********  correlationid={}", thing);
+            LOGGER.warn("**********  correlationid={}  spanid={}", otCorrelation[0], otCorrelation[1]);
 
             LOGGER.warn(
                     "New message received: '{}', diagnostic-id: {},  partition key: {}, partition id: {}, raw partition id: {}, sequence number: {}, offset: {}, enqueued time: {}",
