@@ -1,6 +1,5 @@
 package wt.consumer.ehconsumer;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.applicationinsights.telemetry.RequestTelemetry;
@@ -24,7 +23,6 @@ import reactor.core.publisher.Sinks;
 public class EventProducerController {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(EventProducerController.class);
-    final ObjectMapper mapper = new ObjectMapper();
 
     /** this retrieves the OpenTelemetry representation of traceid */
     public String[] getCorrelationId() {
@@ -67,7 +65,7 @@ public class EventProducerController {
             String traceparent = content.at("/traceparent").asText();
             String message = content.at("/message").asText();
             String[] otCorrelation = getCorrelationId();
-            Response response = new Response();
+            Payload response = new Payload();
             response.aiCorrelationId = getAICorrelationId();
             response.otCorrelationId = otCorrelation[0];
             response.otSpandId = otCorrelation[1];
@@ -88,46 +86,5 @@ public class EventProducerController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 
-    }
-
-    // @PostMapping("/many")
-    // public ResponseEntity<String> sendMessages(@RequestParam String message) {
-    // LOGGER.info("Going to add message {} to sendMessage.", message);
-
-    // var response = new Response();
-    // response.aiCorrelationId = getAICorrelationId();
-    // response.otCorrelationId = getCorrelationId();
-    // response.message = message;
-
-    // many.emitNext(MessageBuilder.withPayload(message).build(),
-    // Sinks.EmitFailureHandler.FAIL_FAST);
-    // return ResponseEntity.ok(response.toString());
-    // }
-
-    class Response {
-        
-        public boolean clientProvided = false;
-        public String aiCorrelationId;
-        public String otCorrelationId;
-        public String otSpandId;
-        public String traceParent;
-        public String parentId;
-        public String message;
-
-        @Override
-        public String toString() {
-            try {
-                return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this);
-            } catch (JsonProcessingException e) {
-                LOGGER.error("could not convert Response to json", e);
-                return null;
-            }
-            // return String.format(
-            // "{\"aiCorrelationId\": \"%s\" ,\n\t\"otCorrelationId\":
-            // \"%s\",\n\t\"message\": \"%s\",\n\t\"traceparent\": \"%s\",\n\t\"parentid\":
-            // \"%s\",\n\t\"clientprovided\": \"%s\"}",
-            // aiCorrelationId, otCorrelationId, otSpandId, message, traceParent, parentId,
-            // clientProvided);
-        }
     }
 }

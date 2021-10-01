@@ -57,7 +57,7 @@ public class EhconsumerApplication {
     }
 
     @Bean
-    public Consumer<Message<JsonNode>> consume() {
+    public Consumer<Message<Payload>> consume() {
         return message -> {
             Checkpointer checkpointer = (Checkpointer) message.getHeaders().get(CHECKPOINTER);
 
