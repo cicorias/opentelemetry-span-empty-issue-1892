@@ -13,8 +13,8 @@ repositories {
 }
 
 ext {
-	// set('azureVersion', "3.8.0")
-	set('azureVersion', "3.6.1")
+	set('azureVersion', "3.8.0")
+	// set('azureVersion', "3.6.1")
 }
 
 dependencies {
@@ -26,6 +26,10 @@ dependencies {
 
 	implementation 'com.microsoft.azure:applicationinsights-web:2.6.3'
 
+	// https://mvnrepository.com/artifact/com.microsoft.azure/applicationinsights-core
+	//mplementation 'com.microsoft.azure:applicationinsights-core:2.6.3'
+
+
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
@@ -33,7 +37,7 @@ dependencies {
 	// implementation 'com.azure.spring:azure-spring-cloud-starter-eventhubs:2.9.0'
 
 	// https://mvnrepository.com/artifact/com.azure.spring/azure-spring-cloud-stream-binder-eventhubs
-	// implementation 'com.azure.spring:azure-spring-cloud-stream-binder-eventhubs:2.9.0'  // breaks getting correlationid from span
+	// implementation 'com.azure.spring:azure-spring-cloud-stream-binder-eventhubs:2.9.0 or 2.8.0'  // breaks getting correlationid from span
 
 	implementation 'com.azure.spring:azure-spring-cloud-stream-binder-eventhubs:2.7.0'
 
