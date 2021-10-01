@@ -2,16 +2,49 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Spring Boot-EhconsumerApplication<ehconsumer>",
+            "name": "base-both",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
-            "mainClass": "wt.EhconsumerApplication",
+            "mainClass": "wt.EhOtelApplication",
             "projectName": "ehconsumer",
             "envFile": "${workspaceFolder}/.env",
             "env": {},
-            "args": "",
+            "args": "--spring.profiles.active=web,consumer",
             "vmArgs": "-javaagent:${workspaceFolder}/applicationinsights-agent-3.1.1.jar"
+        },
+        {
+            "type": "java",
+            "name": "web-only",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "wt.EhOtelApplication",
+            "projectName": "ehconsumer",
+            "envFile": "${workspaceFolder}/.env",
+            "env": {},
+            "args": "--spring.profiles.active=web",
+            "vmArgs": "-javaagent:${workspaceFolder}/applicationinsights-agent-3.1.1.jar"
+        },
+        {
+            "type": "java",
+            "name": "consumer-only",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "wt.EhOtelApplication",
+            "projectName": "ehconsumer",
+            "envFile": "${workspaceFolder}/.env",
+            "env": {},
+            "args": "--spring.profiles.active=consumer",
+            "vmArgs": "-javaagent:${workspaceFolder}/applicationinsights-agent-3.1.1.jar"
+        },
+        
+    ],
+    "compounds": [
+        {
+            "name": "Web and Consumer Different Process",
+            "configurations": ["web-only","consumer-only"]
         }
     ]
 }

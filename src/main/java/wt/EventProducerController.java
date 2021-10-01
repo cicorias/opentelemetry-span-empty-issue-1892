@@ -1,24 +1,20 @@
 package wt;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.microsoft.applicationinsights.telemetry.RequestTelemetry;
-import com.microsoft.applicationinsights.web.internal.ThreadContext;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import io.opentelemetry.api.trace.Span;
-import io.opentelemetry.api.trace.SpanContext;
 import reactor.core.publisher.Sinks;
 
 @RestController
+@Profile("web")
 public class EventProducerController {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(EventProducerController.class);

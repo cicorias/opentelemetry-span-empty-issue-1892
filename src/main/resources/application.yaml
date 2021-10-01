@@ -1,3 +1,5 @@
+server:
+  port: 8080
 spring:
    cloud:
      azure:
@@ -21,8 +23,29 @@ spring:
            consume-in-0:
              consumer:
                checkpoint-mode: MANUAL
-       function:
-         definition: consume;supply;
+      #  function:
+      #    definition: consume;supply;
        poller:
          initial-delay: 0
          fixed-delay: 10000
+
+---
+spring:
+  config:
+    activate:
+      on-profile: web
+  cloud:
+    stream:
+      function:
+        definition: supply
+---
+spring:
+  config:
+    activate:
+      on-profile: consumer
+  cloud:
+    stream:
+      function: 
+        definition: consume
+server:
+  port: 8081
