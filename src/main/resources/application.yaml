@@ -1,33 +1,33 @@
 server:
   port: 8080
 spring:
-   cloud:
-     azure:
-       eventhub:
-         connection-string: ${EH_CONNECTION_STRING}
-         checkpoint-storage-account: ${STORAGE_ACCOUNT}
-         checkpoint-access-key: ${STORAGE_KEY}
-         checkpoint-container: ehtest
+  cloud:
+    azure:
+      eventhub:
+        connection-string: ${EH_CONNECTION_STRING}
+        checkpoint-storage-account: ${STORAGE_ACCOUNT}
+        checkpoint-access-key: ${STORAGE_KEY}
+        checkpoint-container: ehtest
 
-     stream:
-       bindings:
-         consume-in-0:
-           destination: normal
-           group: $Default
-           partitioned: true
-         supply-out-0:
-           destination: normal
+    stream:
+      bindings:
+        consume-in-0:
+          destination: normal
+          group: $Default
+          # partitioned: true
+        supply-out-0:
+          destination: normal
 
-       eventhub:
-         bindings:
-           consume-in-0:
-             consumer:
-               checkpoint-mode: MANUAL
+      eventhub:
+        bindings:
+          consume-in-0:
+            consumer:
+              checkpoint-mode: MANUAL
       #  function:
       #    definition: consume;supply;
-       poller:
-         initial-delay: 0
-         fixed-delay: 10000
+      poller:
+        initial-delay: 0
+        fixed-delay: 10000
 
 ---
 spring:
@@ -35,17 +35,17 @@ spring:
     activate:
       on-profile: web
   cloud:
-    stream:
-      function:
-        definition: supply
+    # stream:
+    function:
+      definition: supply
 ---
 spring:
   config:
     activate:
       on-profile: consumer
   cloud:
-    stream:
-      function: 
-        definition: consume
+    # stream:
+    function:
+      definition: consume
 server:
   port: 8081

@@ -1,0 +1,9 @@
+{
+    "properties": [
+      {
+        "name": "spring.cloud.stream.eventhub.bindings.consumer.checkpoint-mode",
+        "type": "java.lang.String",
+        "description": "see https://docs.microsoft.com/en-us/azure/developer/java/spring-framework/configure-spring-cloud-stream-binder-java-app-azure-event-hub#configure-your-spring-boot-app-to-use-your-azure-event-hub"
+      }
+    ]
+}

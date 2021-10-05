@@ -52,6 +52,10 @@ dependencyManagement {
 	}
 }
 
+bootRun {
+	args = ["--spring.profiles.active=web,consumer"]
+}
+
 test {
 	useJUnitPlatform()
 }
