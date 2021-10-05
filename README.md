@@ -101,3 +101,12 @@ curl --location --request POST "${URL}" \
 
 
 ```
+
+
+
+
+
+## Notes:
+
+- eh link [https://gist.github.com/lmolkova/e4215c0f44a49ef824983382762e6b92](https://gist.github.com/lmolkova/e4215c0f44a49ef824983382762e6b92)
+- [https://opentelemetry.io/docs/java/manual_instrumentation/#context-propagation](https://opentelemetry.io/docs/java/manual_instrumentation/#context-propagation)
