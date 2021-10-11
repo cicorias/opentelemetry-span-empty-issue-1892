@@ -9,8 +9,6 @@ The [`./docs`](docs) folder has scenarios that are desired to be explained on ho
 This is essentially a simple 3 tier application that probably should be the successor to [https://github.com/cicorias/space-spring-front-2-back-appinsights](https://github.com/cicorias/space-spring-front-2-back-appinsights)
 
 ## TODO:
-- Profiles "web,consumer" when run via bootRun or via the VS code launch -- not working correctly
-    - **instead** just use the compound "Web and Consumer Different Process" in VS Code launch -- which works OK.
 - add kubernetes deployment in order to verify when running in azure getting Application Map Support
 - add persist to Cosmos DB to extend end-to-end example
 - add a ReactJS front-end -- take from the other project [Spring-front-2-back-appinsights](https://github.com/cicorias/space-spring-front-2-back-appinsights)
@@ -44,7 +42,7 @@ There are two profiles defined, and with spring they can be run together -- see 
 - base-both
 - web-only
 - consumer-only
-- Web and Consumer - Different processes.
+- Web and Consumer - Different processes
 
 
 ## Environment and setup
