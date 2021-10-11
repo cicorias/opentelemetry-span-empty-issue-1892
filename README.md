@@ -9,10 +9,11 @@ The [`./docs`](docs) folder has scenarios that are desired to be explained on ho
 This is essentially a simple 3 tier application that probably should be the successor to [https://github.com/cicorias/space-spring-front-2-back-appinsights](https://github.com/cicorias/space-spring-front-2-back-appinsights)
 
 ## TODO:
+- Profiles "web,consumer" when run via bootRun or via the VS code launch -- not working correctly
+    - **instead** just use the compound "Web and Consumer Different Process" in VS Code launch -- which works OK.
 - add kubernetes deployment in order to verify when running in azure getting Application Map Support
 - add persist to Cosmos DB to extend end-to-end example
 - add a ReactJS front-end -- take from the other project [Spring-front-2-back-appinsights](https://github.com/cicorias/space-spring-front-2-back-appinsights)
-
 
 ## Introduction
 
@@ -24,6 +25,15 @@ This is a Java Spring Boot application that provides:
 The solution makes uses of Spring Profiles and configuration to allow both "sides" of the Event Hub to be run in the same process, or different. 
 
 It is combined to make deployment simple as a single image and solution. It is purely for education and diagnosing or debugging issues.
+
+## Using Spring Gradle `bootRun`
+
+if running from the command line load `.env` file:
+
+```
+set -o allexport; source .env; set +o allexport
+./gradlew bootRun
+```
 
 ## Profiles
 
@@ -50,8 +60,11 @@ set -o allexport; source .env; set +o allexport
 ```
 APPLICATIONINSIGHTS_CONNECTION_STRING=InstrumentationKey=<get key>
 EH_CONNECTION_STRING="<get root key with listen and send>"
+EH_EVENT_HUB=<create an event hub>
+EH_CONSUMER_GROUP=<use $Default or create a consumer group>
 STORAGE_KEY=<get storage account key for below storage account>
 STORAGE_ACCOUNT=<put storage account name here>
+STORAGE_CONTAINER=<put container unique to developer or env>
 ```
 
 ## Run with VS code -- 
