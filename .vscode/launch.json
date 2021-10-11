@@ -10,7 +10,7 @@
             "projectName": "ehconsumer",
             "envFile": "${workspaceFolder}/.env",
             "env": {},
-            "args": "--spring.profiles.active=web,consumer",
+            "args": "--spring.profiles.active=\"web,consumer\"",
             "vmArgs": "-javaagent:${workspaceFolder}/applicationinsights-agent-3.1.1.jar"
         },
         {

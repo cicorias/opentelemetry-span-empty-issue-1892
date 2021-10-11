@@ -1,5 +1,3 @@
-server:
-  port: 8080
 spring:
   cloud:
     azure:
@@ -7,16 +5,16 @@ spring:
         connection-string: ${EH_CONNECTION_STRING}
         checkpoint-storage-account: ${STORAGE_ACCOUNT}
         checkpoint-access-key: ${STORAGE_KEY}
-        checkpoint-container: ehtest
+        checkpoint-container: ${STORAGE_CONTAINER}
 
     stream:
       bindings:
         consume-in-0:
-          destination: normal
-          group: $Default
+          destination: ${EH_EVENT_HUB}
+          group: ${EH_CONSUMER_GROUP}
           # partitioned: true
         supply-out-0:
-          destination: normal
+          destination: ${EH_EVENT_HUB}
 
       eventhub:
         bindings:
@@ -47,5 +45,21 @@ spring:
     # stream:
     function:
       definition: consume
-server:
-  port: 8081
+---
+spring:
+  config:
+    activate:
+      on-profile: "web,consumer"
+  cloud:
+    # stream:
+    function:
+      definition: consume;supply
+---
+spring:
+  config:
+    activate:
+      on-profile: "!web"
+
+# this will disable tomcat if web not running
+  main:
+    web-application-type: none

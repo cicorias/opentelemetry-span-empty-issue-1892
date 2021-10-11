@@ -13,7 +13,6 @@ This is essentially a simple 3 tier application that probably should be the succ
 - add persist to Cosmos DB to extend end-to-end example
 - add a ReactJS front-end -- take from the other project [Spring-front-2-back-appinsights](https://github.com/cicorias/space-spring-front-2-back-appinsights)
 
-
 ## Introduction
 
 This is a Java Spring Boot application that provides:
@@ -25,6 +24,15 @@ The solution makes uses of Spring Profiles and configuration to allow both "side
 
 It is combined to make deployment simple as a single image and solution. It is purely for education and diagnosing or debugging issues.
 
+## Using Spring Gradle `bootRun`
+
+if running from the command line load `.env` file:
+
+```
+set -o allexport; source .env; set +o allexport
+./gradlew bootRun
+```
+
 ## Profiles
 
 There are two profiles defined, and with spring they can be run together -- see the `build.gradle` file and the `bootRun` section as an example; or look at the `./vscode/launch.json` settings for examples that profide the command line switch.
@@ -34,7 +42,7 @@ There are two profiles defined, and with spring they can be run together -- see 
 - base-both
 - web-only
 - consumer-only
-- Web and Consumer - Different processes.
+- Web and Consumer - Different processes
 
 
 ## Environment and setup
@@ -50,8 +58,11 @@ set -o allexport; source .env; set +o allexport
 ```
 APPLICATIONINSIGHTS_CONNECTION_STRING=InstrumentationKey=<get key>
 EH_CONNECTION_STRING="<get root key with listen and send>"
+EH_EVENT_HUB=<create an event hub>
+EH_CONSUMER_GROUP=<use $Default or create a consumer group>
 STORAGE_KEY=<get storage account key for below storage account>
 STORAGE_ACCOUNT=<put storage account name here>
+STORAGE_CONTAINER=<put container unique to developer or env>
 ```
 
 ## Run with VS code -- 
