@@ -45,7 +45,15 @@ spring:
     # stream:
     function:
       definition: consume
-
+---
+spring:
+  config:
+    activate:
+      on-profile: "web,consumer"
+  cloud:
+    # stream:
+    function:
+      definition: consume;supply
 ---
 spring:
   config:

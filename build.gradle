@@ -53,7 +53,7 @@ dependencyManagement {
 }
 
 bootRun {
-	args = ["--spring.profiles.active=\"web,consumer\""]
+	args = ["--spring.profiles.active=web,consumer"]
 }
 
 test {
